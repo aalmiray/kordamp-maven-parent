@@ -59,14 +59,21 @@ jobs:
           git config user.email "${{ github.event.head_commit.committer.email }}"
           mvn -B --file pom.xml release:prepare release:perform -Drepository.url=https://${GITHUB_ACTOR}:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git
 
-      - name: Get the version
-        id: get_version
-        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\/v/}
+  announce:
+    name: Announce
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: oprypin/find-latest-tag@v1
+        id: version
+        with:
+          repository: ${{ github.repository }}
+          prefix: v
 
       - name: Announce
         uses: ethomson/send-tweet-action@v1
         with:
-          status: "Version ${{ steps.get_version.outputs.VERSION }} of ${GITHUB_REPOSITORY} has been released to Maven Central https://@github.com/${GITHUB_REPOSITORY}"
+          status: "Release ${{ steps.version.outputs.tag }} of ${{ github.repository }} has been published to Maven Central https://github.com/${{ github.repository }}"
           consumer-key: ${{ secrets.TWITTER_API_KEY }}
           consumer-secret: ${{ secrets.TWITTER_API_SECRET_KEY }}
           access-token: ${{ secrets.TWITTER_ACCESS_TOKEN }}
