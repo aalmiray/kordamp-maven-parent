@@ -21,7 +21,7 @@ jobs:
       - name: Announce
         uses: ethomson/send-tweet-action@v1
         with:
-          status: "Version ${{ steps.version.outputs.tag }} of ${{ GITHUB_REPOSITORY }} has been released to Maven Central https://github.com/${{ GITHUB_REPOSITORY }}"
+          status: "Version ${{ steps.version.outputs.tag }} of $GITHUB_REPOSITORY has been released to Maven Central https://github.com/$GITHUB_REPOSITORY"
           consumer-key: ${{ secrets.TWITTER_API_KEY }}
           consumer-secret: ${{ secrets.TWITTER_API_SECRET_KEY }}
           access-token: ${{ secrets.TWITTER_ACCESS_TOKEN }}
