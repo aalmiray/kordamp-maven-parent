@@ -1,0 +1,80 @@
+= kordamp-parent
+:project-owner:      kordamp
+:project-name:       kordamp-parent
+:project-groupId:    org.kordamp.maven
+:project-artifactId: kordamp-parent
+:project-version:    1.0.0-SNAPSHOT
+
+image:https://github.com/{project-owner}/{project-name}/workflows/Build/badge.svg["Build Status", link="https://github.com/{project-owner}/{project-name}/actions"]
+image:https://img.shields.io/maven-central/v/{project-groupId}/{project-artifactId}.svg[Download, link="https://search.maven.org/#search|ga|1|g:{project-groupId} AND a:{project-artifactId}"]
+
+---
+
+Parent POM for all Maven based Kordamp projects.
+
+== Profiles
+
+The parent POM enables the following profiles:
+
+* `publication`: generates sources and javadoc JARs.
+* `gpg`: signs all attached artifacts.
+* `local-deploy`: deploys all artifacts to a target directory defined by `${local.repository.path}`
+
+== Requirements
+
+Children projects must define values for the following properties
+
+Given a project named `foo` located at `kordamp/foo`:
+
+[source,xml]
+[subs="verbatim"]
+----
+<properties>
+    <project.identifier>foo</project.identifier>
+    <project.repository>kordamp/foo</project.repository>
+    <local.repository.path>/tmp/repository</local.repository.path>
+    <java.version>1.8</java.version>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+</properties>
+----
+
+== Constraints
+
+The `<scm>` block must be defined explicitly at the root of the child project, otherwise the URLs will be set to the wrong
+paths. Given a project named `foo` located at `kordamp/foo`:
+
+[source,xml]
+[subs="verbatim"]
+----
+<scm>
+    <connection>scm:git:${repository.url}</connection>
+    <developerConnection>scm:git:${repository.url}</developerConnection>
+    <url>${repository.url}</url>
+    <tag>HEAD</tag>
+</scm>
+----
+
+The `license-maven-plugin` must be defined at the root of the child in order to find the license header template at the
+right location
+
+[source,xml]
+[subs="verbatim"]
+----
+<plugin>
+    <groupId>com.mycila</groupId>
+    <artifactId>license-maven-plugin</artifactId>
+    <configuration combine.self="override">
+        <header>${rootdir}/etc/license.txt</header>
+        <strictCheck>true</strictCheck>
+        <excludes>
+            <exclude>README.md</exclude>
+            <exclude>LICENSE</exclude>
+            <exclude>mvnw</exclude>
+            <exclude>mvnw.cmd</exclude>
+            <exclude>.mvn/wrapper/*</exclude>
+            <exclude>...</exclude>
+        </excludes>
+    </configuration>
+</plugin>
+----
