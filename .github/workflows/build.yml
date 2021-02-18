@@ -61,6 +61,7 @@ jobs:
 
   announce:
     name: Announce
+    needs: release
     runs-on: ubuntu-latest
 
     steps:
