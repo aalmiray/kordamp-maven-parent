@@ -46,6 +46,7 @@
     <local.repository.path>${project.build.directory}/repository</local.repository.path>
     <!-- override when needed -->
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <maven.version>3.6.3</maven.version>
     <nexus.url>https://s01.oss.sonatype.org</nexus.url>
     <repository.url>git@github.com:${project.repository}.git</repository.url>
@@ -90,6 +91,9 @@
         <id>aalmiray</id>
         <name>Andres Almiray</name>
         <url>https://andresalmiray.com/</url>
+        <properties>
+          <picUrl>https://avatars.io/twitter/aalmiray/small</picUrl>
+        </properties>
       </developer>
   </developers>
 
@@ -107,6 +111,10 @@
       <id>ossrh</id>
       <url>${nexus.url}/service/local/staging/deploy/maven2/</url>
     </repository>
+    <site>
+      <id>kordamp</id>
+      <url>scm:git:ssh://git@github.com/${project.repository}.git</url>
+    </site>
   </distributionManagement>
 
   <build>
@@ -237,6 +245,9 @@
         <configuration combine.children="override">
           <header>${rootdir}/etc/license.txt</header>
           <strictCheck>true</strictCheck>
+          <properties>
+            <author>Andres Almiray</author>
+          </properties>
           <excludes>
             <exclude>README.adoc</exclude>
             <exclude>LICENSE</exclude>
