@@ -3,7 +3,7 @@
 :project-name:       kordamp-parent
 :project-groupId:    org.kordamp.maven
 :project-artifactId: kordamp-parent
-:project-version:    1.0.0
+:project-version:    1.1.0
 
 image:https://github.com/{project-owner}/{project-name}/workflows/Build/badge.svg["Build Status", link="https://github.com/{project-owner}/{project-name}/actions"]
 image:https://img.shields.io/maven-central/v/{project-groupId}/{project-artifactId}.svg[Download, link="https://search.maven.org/#search|ga|1|g:{project-groupId} AND a:{project-artifactId}"]
@@ -31,7 +31,7 @@ Given a project named `foo` located at `kordamp/foo`:
 ----
 <properties>
     <project.identifier>foo</project.identifier>
-    <project.repository>kordamp/foo</project.repository>
+    <project.github.repository>kordamp/foo</project.github.repository>
     <local.repository.path>/tmp/repository</local.repository.path>
     <java.version>1.8</java.version>
     <maven.compiler.source>1.8</maven.compiler.source>
