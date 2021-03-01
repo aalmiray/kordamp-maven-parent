@@ -257,8 +257,8 @@
                                 <enforceBytecodeVersion>
                                     <maxJdkVersion>${java.version}</maxJdkVersion>
                                 </enforceBytecodeVersion>
-                                <dependencyConvergence></dependencyConvergence>
-                                <requireUpperBoundDeps></requireUpperBoundDeps>
+                                <dependencyConvergence />
+                                <requireUpperBoundDeps />
                             </rules>
                         </configuration>
                     </execution>
