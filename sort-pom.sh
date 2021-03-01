@@ -17,5 +17,5 @@
 # limitations under the License.
 #
 
-mvn com.github.ekryd.sortpom:sortpom-maven-plugin:sort -Dsort.keepBlankLines -Dsort.sortPlugins=groupId,artifactId -Dsort.sortDependencies=scope,artifactId -Dsort.nrOfIndentSpace=4 -Dsort.sortOrderFile=https://raw.githubusercontent.com/kordamp/kordamp-maven-parent/main/kordamp-sort.xml
+mvn com.github.ekryd.sortpom:sortpom-maven-plugin:sort -Dsort.keepBlankLines -Dsort.sortPlugins=groupId,artifactId -Dsort.sortDependencies=scope,artifactId -Dsort.nrOfIndentSpace=4 -Dsort.expandEmptyElements=false -Dsort.sortOrderFile=https://raw.githubusercontent.com/kordamp/kordamp-maven-parent/main/kordamp-sort.xml
 
