@@ -44,7 +44,7 @@ jobs:
           export GPG_TTY=$(tty)
           ./mvnw --no-transfer-progress -B --file pom.xml \
             -Drepository.url=https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git \
-            -Drelease=true -Dmaven.site.skip=true -Ppublication,gpg deploy
+            -Dmaven.site.skip=true -Drelease=true deploy
 
   announce:
     name: Announce

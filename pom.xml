@@ -55,6 +55,7 @@
         <version.compiler.plugin>3.8.1</version.compiler.plugin>
         <version.dependency.plugin>3.1.2</version.dependency.plugin>
         <version.deploy.plugin>3.0.0-M1</version.deploy.plugin>
+        <version.directory.plugin>0.3.1</version.directory.plugin>
         <version.enforcer.plugin>3.0.0-M3</version.enforcer.plugin>
         <version.failsafe.plugin>3.0.0-M5</version.failsafe.plugin>
         <version.git.plugin>3.0.1</version.git.plugin>
@@ -62,9 +63,8 @@
         <version.install.plugin>3.0.0-M1</version.install.plugin>
         <version.javadoc.plugin>3.2.0</version.javadoc.plugin>
         <version.jar.plugin>3.1.2</version.jar.plugin>
-        <version.license.plugin>3.0</version.license.plugin>
+        <version.license.plugin>4.0.rc2</version.license.plugin>
         <version.nexus.plugin>1.6.8</version.nexus.plugin>
-        <version.release.plugin>3.0.0-M1</version.release.plugin>
         <version.resources.plugin>3.1.0</version.resources.plugin>
         <version.source.plugin>3.2.1</version.source.plugin>
         <version.surefire.plugin>3.0.0-M4</version.surefire.plugin>
@@ -198,11 +198,6 @@
                     <version>${version.javadoc.plugin}</version>
                 </plugin>
                 <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-release-plugin</artifactId>
-                    <version>${version.release.plugin}</version>
-                </plugin>
-                <plugin>
                     <groupId>org.sonatype.plugins</groupId>
                     <artifactId>nexus-staging-maven-plugin</artifactId>
                     <version>${version.nexus.plugin}</version>
@@ -215,7 +210,7 @@
                 <plugin>
                     <groupId>org.commonjava.maven.plugins</groupId>
                     <artifactId>directory-maven-plugin</artifactId>
-                    <version>0.1</version>
+                    <version>${version.directory.plugin}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -342,28 +337,6 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>versions-maven-plugin</artifactId>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-release-plugin</artifactId>
-                <configuration>
-                    <useReleaseProfile>false</useReleaseProfile>
-                    <releaseProfiles>publication,gpg</releaseProfiles>
-                    <tagNameFormat>v@{project.version}</tagNameFormat>
-                    <scmReleaseCommitComment>Preparing @{releaseLabel} release</scmReleaseCommitComment>
-                    <scmDevelopmentCommitComment>Preparing next development iteration</scmDevelopmentCommitComment>
-                    <autoVersionSubmodules>true</autoVersionSubmodules>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.sonatype.plugins</groupId>
-                <artifactId>nexus-staging-maven-plugin</artifactId>
-                <extensions>true</extensions>
-                <configuration>
-                    <serverId>central</serverId>
-                    <nexusUrl>${nexus.url}</nexusUrl>
-                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
-                </configuration>
-            </plugin>
         </plugins>
     </build>
 
@@ -371,7 +344,9 @@
         <profile>
             <id>publication</id>
             <activation>
-                <activeByDefault>false</activeByDefault>
+                <property>
+                    <name>release</name>
+                </property>
             </activation>
             <build>
                 <plugins>
@@ -432,7 +407,9 @@
         <profile>
             <id>gpg</id>
             <activation>
-                <activeByDefault>false</activeByDefault>
+                <property>
+                    <name>release</name>
+                </property>
             </activation>
             <build>
                 <plugins>
@@ -459,20 +436,37 @@
         </profile>
 
         <profile>
+            <id>remote-deploy</id>
+            <activation>
+                <property>
+                    <name>release</name>
+                </property>
+            </activation>
+            <build>
+                <defaultGoal>deploy</defaultGoal>
+                <plugins>
+                    <plugin>
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <serverId>central</serverId>
+                            <nexusUrl>${nexus.url}</nexusUrl>
+                            <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
             <id>local-deploy</id>
             <activation>
                 <activeByDefault>false</activeByDefault>
             </activation>
-            <distributionManagement>
-                <snapshotRepository>
-                    <id>local-snapshot</id>
-                    <url>file://${local.repository.path}/snapshot</url>
-                </snapshotRepository>
-                <repository>
-                    <id>local-release</id>
-                    <url>file://${local.repository.path}/release</url>
-                </repository>
-            </distributionManagement>
+            <properties>
+                <altDeploymentRepository>local::file:${local.repository.path}</altDeploymentRepository>
+            </properties>
             <build>
                 <defaultGoal>deploy</defaultGoal>
                 <plugins>
@@ -487,26 +481,6 @@
                                 </fileset>
                             </filesets>
                         </configuration>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-antrun-plugin</artifactId>
-                        <inherited>false</inherited>
-                        <executions>
-                            <execution>
-                                <id>generate-repository-directories</id>
-                                <phase>generate-sources</phase>
-                                <configuration>
-                                    <target>
-                                        <mkdir dir="${local.repository.path}/snapshot" />
-                                        <mkdir dir="${local.repository.path}/release" />
-                                    </target>
-                                </configuration>
-                                <goals>
-                                    <goal>run</goal>
-                                </goals>
-                            </execution>
-                        </executions>
                     </plugin>
                 </plugins>
             </build>
