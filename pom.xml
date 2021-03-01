@@ -27,16 +27,6 @@
     <version>1.1.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>kordamp-parent</name>
-    <description>Parent POM for all Maven based Kordamp projects</description>
-    <url>https://github.com/kordamp</url>
-    <inceptionYear>2021</inceptionYear>
-
-    <organization>
-        <name>Kordamp</name>
-        <url>https://kordamp.org</url>
-    </organization>
-
     <properties>
         <!-- !! children should override these properties !! -->
         <project.identifier>kordamp</project.identifier>
@@ -71,6 +61,16 @@
         <version.versions.plugin>2.8.1</version.versions.plugin>
     </properties>
 
+    <name>kordamp-parent</name>
+    <description>Parent POM for all Maven based Kordamp projects</description>
+    <url>https://github.com/kordamp</url>
+    <inceptionYear>2021</inceptionYear>
+
+    <organization>
+        <name>Kordamp</name>
+        <url>https://kordamp.org</url>
+    </organization>
+
     <licenses>
         <license>
             <name>Apache-2.0</name>
@@ -78,13 +78,6 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
-
-    <scm>
-        <connection>scm:git:${repository.url}</connection>
-        <developerConnection>scm:git:${repository.url}</developerConnection>
-        <url>${repository.url}</url>
-        <tag>HEAD</tag>
-    </scm>
 
     <developers>
         <developer>
@@ -99,24 +92,21 @@
         <url>https://github.com/${project.github.repository}/issues</url>
     </issueManagement>
 
-    <distributionManagement>
-        <snapshotRepository>
-            <id>ossrh</id>
-            <url>${nexus.url}/content/repositories/snapshots</url>
-        </snapshotRepository>
-        <repository>
-            <id>ossrh</id>
-            <url>${nexus.url}/service/local/staging/deploy/maven2/</url>
-        </repository>
-        <site>
-            <id>kordamp</id>
-            <url>scm:git:ssh://git@github.com/${project.github.repository}.git</url>
-        </site>
-    </distributionManagement>
+    <scm>
+        <connection>scm:git:${repository.url}</connection>
+        <developerConnection>scm:git:${repository.url}</developerConnection>
+        <tag>HEAD</tag>
+        <url>${repository.url}</url>
+    </scm>
 
     <build>
         <pluginManagement>
             <plugins>
+                <plugin>
+                    <groupId>com.mycila</groupId>
+                    <artifactId>license-maven-plugin</artifactId>
+                    <version>${version.license.plugin}</version>
+                </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-antrun-plugin</artifactId>
@@ -126,16 +116,6 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-clean-plugin</artifactId>
                     <version>${version.clean.plugin}</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-resources-plugin</artifactId>
-                    <version>${version.resources.plugin}</version>
-                </plugin>
-                <plugin>
-                    <groupId>com.mycila</groupId>
-                    <artifactId>license-maven-plugin</artifactId>
-                    <version>${version.license.plugin}</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -154,18 +134,8 @@
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-install-plugin</artifactId>
-                    <version>${version.install.plugin}</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>versions-maven-plugin</artifactId>
-                    <version>${version.versions.plugin}</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <version>${version.surefire.plugin}</version>
+                    <artifactId>maven-enforcer-plugin</artifactId>
+                    <version>${version.enforcer.plugin}</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -174,18 +144,28 @@
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-gpg-plugin</artifactId>
+                    <version>${version.gpg.plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <version>${version.install.plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jar-plugin</artifactId>
                     <version>${version.jar.plugin}</version>
                 </plugin>
                 <plugin>
-                    <groupId>pl.project13.maven</groupId>
-                    <artifactId>git-commit-id-plugin</artifactId>
-                    <version>${version.git.plugin}</version>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>${version.javadoc.plugin}</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-enforcer-plugin</artifactId>
-                    <version>${version.enforcer.plugin}</version>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>${version.resources.plugin}</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -194,8 +174,18 @@
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>${version.javadoc.plugin}</version>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${version.surefire.plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>versions-maven-plugin</artifactId>
+                    <version>${version.versions.plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.commonjava.maven.plugins</groupId>
+                    <artifactId>directory-maven-plugin</artifactId>
+                    <version>${version.directory.plugin}</version>
                 </plugin>
                 <plugin>
                     <groupId>org.sonatype.plugins</groupId>
@@ -203,34 +193,13 @@
                     <version>${version.nexus.plugin}</version>
                 </plugin>
                 <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-gpg-plugin</artifactId>
-                    <version>${version.gpg.plugin}</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.commonjava.maven.plugins</groupId>
-                    <artifactId>directory-maven-plugin</artifactId>
-                    <version>${version.directory.plugin}</version>
+                    <groupId>pl.project13.maven</groupId>
+                    <artifactId>git-commit-id-plugin</artifactId>
+                    <version>${version.git.plugin}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
         <plugins>
-            <plugin>
-                <groupId>org.commonjava.maven.plugins</groupId>
-                <artifactId>directory-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>resolve-rootdir</id>
-                        <goals>
-                            <goal>highest-basedir</goal>
-                        </goals>
-                        <phase>initialize</phase>
-                        <configuration>
-                            <property>rootdir</property>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
             <plugin>
                 <groupId>com.mycila</groupId>
                 <artifactId>license-maven-plugin</artifactId>
@@ -263,6 +232,40 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>extra-enforcer-rules</artifactId>
+                        <version>1.3</version>
+                    </dependency>
+                </dependencies>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <phase>validate</phase>
+                        <configuration>
+                            <rules combine.children="override">
+                                <requireMavenVersion>
+                                    <version>${maven.version}</version>
+                                </requireMavenVersion>
+                                <requireJavaVersion>
+                                    <version>${java.version}</version>
+                                </requireJavaVersion>
+                                <enforceBytecodeVersion>
+                                    <maxJdkVersion>${java.version}</maxJdkVersion>
+                                </enforceBytecodeVersion>
+                                <dependencyConvergence></dependencyConvergence>
+                                <requireUpperBoundDeps></requireUpperBoundDeps>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <configuration>
                     <archive>
@@ -279,6 +282,26 @@
                 </configuration>
             </plugin>
             <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.commonjava.maven.plugins</groupId>
+                <artifactId>directory-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>resolve-rootdir</id>
+                        <goals>
+                            <goal>highest-basedir</goal>
+                        </goals>
+                        <phase>initialize</phase>
+                        <configuration>
+                            <property>rootdir</property>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <groupId>pl.project13.maven</groupId>
                 <artifactId>git-commit-id-plugin</artifactId>
                 <executions>
@@ -292,53 +315,29 @@
                             <verbose>false</verbose>
                             <failOnNoGitDirectory>false</failOnNoGitDirectory>
                             <generateGitPropertiesFile>true</generateGitPropertiesFile>
-                            <generateGitPropertiesFilename>${project.build.directory}/git.properties
-                            </generateGitPropertiesFilename>
+                            <generateGitPropertiesFilename>${project.build.directory}/git.properties</generateGitPropertiesFilename>
                             <dateFormat>yyyy-MM-dd'T'HH:mm:ssXXX</dateFormat>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-enforcer-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>enforce</goal>
-                        </goals>
-                        <configuration>
-                            <rules combine.children="override">
-                                <requireMavenVersion>
-                                    <version>${maven.version}</version>
-                                </requireMavenVersion>
-                                <requireJavaVersion>
-                                    <version>${java.version}</version>
-                                </requireJavaVersion>
-                                <enforceBytecodeVersion>
-                                    <maxJdkVersion>${java.version}</maxJdkVersion>
-                                </enforceBytecodeVersion>
-                                <dependencyConvergence />
-                                <requireUpperBoundDeps />
-                            </rules>
-                        </configuration>
-                    </execution>
-                </executions>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>extra-enforcer-rules</artifactId>
-                        <version>1.3</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>versions-maven-plugin</artifactId>
-            </plugin>
         </plugins>
     </build>
+
+    <distributionManagement>
+        <repository>
+            <id>ossrh</id>
+            <url>${nexus.url}/service/local/staging/deploy/maven2/</url>
+        </repository>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>${nexus.url}/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <site>
+            <id>kordamp</id>
+            <url>scm:git:ssh://git@github.com/${project.github.repository}.git</url>
+        </site>
+    </distributionManagement>
 
     <profiles>
         <profile>
@@ -351,16 +350,19 @@
             <build>
                 <plugins>
                     <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-source-plugin</artifactId>
+                        <groupId>com.coderplus.maven.plugins</groupId>
+                        <artifactId>copy-rename-maven-plugin</artifactId>
+                        <version>1.0.1</version>
                         <executions>
                             <execution>
-                                <id>attach-sources</id>
+                                <id>copy-license-file</id>
                                 <goals>
-                                    <goal>jar</goal>
+                                    <goal>copy</goal>
                                 </goals>
+                                <phase>generate-sources</phase>
                                 <configuration>
-                                    <attach>true</attach>
+                                    <sourceFile>${session.executionRootDirectory}/LICENSE</sourceFile>
+                                    <destinationFile>${project.build.outputDirectory}/META-INF/LICENSE-${project.identifier}</destinationFile>
                                 </configuration>
                             </execution>
                         </executions>
@@ -381,21 +383,16 @@
                         </executions>
                     </plugin>
                     <plugin>
-                        <groupId>com.coderplus.maven.plugins</groupId>
-                        <artifactId>copy-rename-maven-plugin</artifactId>
-                        <version>1.0.1</version>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
                         <executions>
                             <execution>
-                                <id>copy-license-file</id>
-                                <phase>generate-sources</phase>
+                                <id>attach-sources</id>
                                 <goals>
-                                    <goal>copy</goal>
+                                    <goal>jar</goal>
                                 </goals>
                                 <configuration>
-                                    <sourceFile>${session.executionRootDirectory}/LICENSE</sourceFile>
-                                    <destinationFile>
-                                        ${project.build.outputDirectory}/META-INF/LICENSE-${project.identifier}
-                                    </destinationFile>
+                                    <attach>true</attach>
                                 </configuration>
                             </execution>
                         </executions>
@@ -418,10 +415,10 @@
                         <artifactId>maven-gpg-plugin</artifactId>
                         <executions>
                             <execution>
-                                <phase>verify</phase>
                                 <goals>
                                     <goal>sign</goal>
                                 </goals>
+                                <phase>verify</phase>
                                 <configuration>
                                     <gpgArguments>
                                         <arg>--pinentry-mode</arg>
