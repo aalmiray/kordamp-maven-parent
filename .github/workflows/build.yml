@@ -2,8 +2,12 @@ name: Build
 
 on:
   push:
-    branches:
-      - '*'
+    branches: [ main ]
+  pull_request:
+
+env:
+  JAVA_VERSION: '11'
+  JAVA_DISTRO: 'zulu'
 
 jobs:
   build:
@@ -15,18 +19,18 @@ jobs:
       - name: Checkout sources
         uses: actions/checkout@v2
 
+      - name: Setup Java
+        uses: actions/setup-java@v2
+        with:
+          java-version: ${{ env.JAVA_VERSION }}
+          distribution: ${{ env.JAVA_DISTRO }}
+
       - name: Cache Maven
         uses: actions/cache@v2
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
-
-      - name: Setup Java
-        uses: actions/setup-java@v2
-        with:
-          java-version: 8
-          distribution: 'zulu'
 
       - name: Build
         run: ./mvnw --no-transfer-progress -B --file pom.xml verify

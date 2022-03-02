@@ -19,9 +19,7 @@
 project:
   name: kordamp-maven-parent
   description: Parent POM for all Maven based Kordamp projects.
-  longDescription: |
-    Parent POM for all Maven based Kordamp projects.
-  website: https://github.com/kordamp/kordamp-maven-parent/
+  website: https://github.com/kordamp/kordamp-maven-parent
   authors:
     - Andres Almiray
   license: Apache-2.0
@@ -30,15 +28,15 @@ project:
 
 release:
   github:
-    branch: master
-    username: aalmiray
+    sign: true
     overwrite: true
     milestone:
       name: '{{projectVersion}}'
     changelog:
-      sort: DESC
       formatted: ALWAYS
       format: '- {{commitShortHash}} {{commitTitle}}'
+      contributors:
+        format: '- {{contributorName}}{{#contributorUsernameAsLink}} ({{.}}){{/contributorUsernameAsLink}}'
       labelers:
         - label: 'feature'
           title: 'Resolves #'
@@ -86,6 +84,10 @@ release:
         - search: '\[deps\] '
         - search: '\[docs\] '
         - search: '\[build\] '
+
+signing:
+  active: always
+  armored: true
 
 announce:
   twitter:
