@@ -25,6 +25,9 @@ project:
     - Andres Almiray
   license: Apache-2.0
   inceptionYear: 2021
+  java:
+    groupId: org.kordamp.maven
+    artifactId: kordamp-parent
 
 release:
   github:
@@ -68,7 +71,7 @@ deploy:
         closeRepository: true
         releaseRepository: true
         stagingRepositories:
-          - oci-maven-plugin/target/staging-deploy
+          - target/staging-deploy
 
 announce:
   twitter:
