@@ -37,30 +37,30 @@
         <!-- override when needed -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <maven.version>3.6.3</maven.version>
+        <maven.version>3.8.6</maven.version>
         <nexus.url>https://s01.oss.sonatype.org</nexus.url>
         <repository.url>git@github.com:${project.github.repository}.git</repository.url>
         <version.antrun.plugin>3.0.0</version.antrun.plugin>
         <version.clean.plugin>3.1.0</version.clean.plugin>
-        <version.compiler.plugin>3.8.1</version.compiler.plugin>
-        <version.dependency.plugin>3.1.2</version.dependency.plugin>
-        <version.deploy.plugin>3.0.0-M1</version.deploy.plugin>
-        <version.directory.plugin>0.3.1</version.directory.plugin>
-        <version.enforcer.plugin>3.0.0</version.enforcer.plugin>
-        <version.enforcer.rules>1.5.1</version.enforcer.rules>
-        <version.failsafe.plugin>3.0.0-M5</version.failsafe.plugin>
-        <version.git.plugin>3.0.1</version.git.plugin>
+        <version.compiler.plugin>3.10.1</version.compiler.plugin>
+        <version.dependency.plugin>3.3.0</version.dependency.plugin>
+        <version.deploy.plugin>3.0.0</version.deploy.plugin>
+        <version.directory.plugin>1.0</version.directory.plugin>
+        <version.enforcer.plugin>3.1.0</version.enforcer.plugin>
+        <version.enforcer.rules>1.6.1</version.enforcer.rules>
+        <version.failsafe.plugin>3.0.0-M7</version.failsafe.plugin>
+        <version.git.plugin>5.0.0</version.git.plugin>
         <version.gpg.plugin>1.6</version.gpg.plugin>
-        <version.install.plugin>3.0.0-M1</version.install.plugin>
-        <version.javadoc.plugin>3.2.0</version.javadoc.plugin>
-        <version.jar.plugin>3.2.0</version.jar.plugin>
-        <version.license.plugin>4.0.rc2</version.license.plugin>
+        <version.install.plugin>3.1.0</version.install.plugin>
+        <version.javadoc.plugin>3.4.1</version.javadoc.plugin>
+        <version.jar.plugin>3.3.0</version.jar.plugin>
+        <version.license.plugin>4.1</version.license.plugin>
         <version.nexus.plugin>1.6.8</version.nexus.plugin>
-        <version.resources.plugin>3.2.0</version.resources.plugin>
-        <version.site.plugin>3.8.2</version.site.plugin>
+        <version.resources.plugin>3.3.0</version.resources.plugin>
+        <version.site.plugin>3.12.1</version.site.plugin>
         <version.source.plugin>3.2.1</version.source.plugin>
-        <version.surefire.plugin>3.0.0-M5</version.surefire.plugin>
-        <version.versions.plugin>2.8.1</version.versions.plugin>
+        <version.surefire.plugin>3.0.0-M7</version.surefire.plugin>
+        <version.versions.plugin>2.13.0</version.versions.plugin>
     </properties>
 
     <name>kordamp-parent</name>
@@ -200,8 +200,8 @@
                     <version>${version.nexus.plugin}</version>
                 </plugin>
                 <plugin>
-                    <groupId>pl.project13.maven</groupId>
-                    <artifactId>git-commit-id-plugin</artifactId>
+                    <groupId>io.github.git-commit-id</groupId>
+                    <artifactId>git-commit-id-maven-plugin</artifactId>
                     <version>${version.git.plugin}</version>
                 </plugin>
             </plugins>
@@ -278,10 +278,8 @@
                 <configuration>
                     <archive>
                         <manifestEntries>
-                            <Build-Jdk>${java.version} (${java.vendor} ${java.vm.version})</Build-Jdk>
-                            <Build-Timestamp>${git.build.time}</Build-Timestamp>
+                            <Build-Timestamp>${git.commit.author.time}</Build-Timestamp>
                             <Build-Revision>${git.commit.id}</Build-Revision>
-                            <Build-OS>${os.name} ${os.arch} ${os.version}</Build-OS>
                         </manifestEntries>
                         <manifest>
                             <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
@@ -310,8 +308,8 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>pl.project13.maven</groupId>
-                <artifactId>git-commit-id-plugin</artifactId>
+                <groupId>io.github.git-commit-id</groupId>
+                <artifactId>git-commit-id-maven-plugin</artifactId>
                 <executions>
                     <execution>
                         <id>resolve-git-properties</id>
