@@ -7,10 +7,6 @@ on:
         description: 'Release version'
         required: true
 
-env:
-  JAVA_VERSION: '11'
-  JAVA_DISTRO: 'zulu'
-
 jobs:
   release:
     name: Release
@@ -25,15 +21,9 @@ jobs:
       - name: Setup Java
         uses: actions/setup-java@v3
         with:
-          java-version: ${{ env.JAVA_VERSION }}
-          distribution: ${{ env.JAVA_DISTRO }}
-
-      - name: Cache Maven
-        uses: actions/cache@v3
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
+          java-version: ${{ vars.JAVA_VERSION }}
+          distribution: ${{ vars.JAVA_DISTRO }}
+          cache: maven
 
       - name: Version
         run: |
@@ -54,7 +44,7 @@ jobs:
       - name: Release
         uses: jreleaser/release-action@v2
         with:
-          version: early-access
+          version: latest
           arguments: full-release
         env:
           JRELEASER_PROJECT_VERSION: ${{ github.event.inputs.version }}
