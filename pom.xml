@@ -39,26 +39,28 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.version>3.8.6</maven.version>
         <repository.url>git@github.com:${project.github.repository}.git</repository.url>
+        <!-- value comes from property git.commit.author.time -->
+        <project.build.outputTimestamp>${git.commit.author.time}</project.build.outputTimestamp>
         <version.antrun.plugin>3.0.0</version.antrun.plugin>
-        <version.clean.plugin>3.1.0</version.clean.plugin>
-        <version.compiler.plugin>3.10.1</version.compiler.plugin>
-        <version.dependency.plugin>3.3.0</version.dependency.plugin>
-        <version.deploy.plugin>3.0.0</version.deploy.plugin>
+        <version.clean.plugin>3.2.0</version.clean.plugin>
+        <version.compiler.plugin>3.11.0</version.compiler.plugin>
+        <version.dependency.plugin>3.5.0</version.dependency.plugin>
+        <version.deploy.plugin>3.1.1</version.deploy.plugin>
         <version.directory.plugin>1.0</version.directory.plugin>
-        <version.enforcer.plugin>3.1.0</version.enforcer.plugin>
+        <version.enforcer.plugin>3.2.1</version.enforcer.plugin>
         <version.enforcer.rules>1.6.1</version.enforcer.rules>
-        <version.failsafe.plugin>3.0.0-M7</version.failsafe.plugin>
+        <version.failsafe.plugin>3.0.0</version.failsafe.plugin>
         <version.git.plugin>5.0.0</version.git.plugin>
-        <version.install.plugin>3.1.0</version.install.plugin>
-        <version.javadoc.plugin>3.4.1</version.javadoc.plugin>
+        <version.install.plugin>3.1.1</version.install.plugin>
+        <version.javadoc.plugin>3.5.0</version.javadoc.plugin>
         <version.jar.plugin>3.3.0</version.jar.plugin>
-        <version.jreleaser.plugin>1.3.1</version.jreleaser.plugin>
+        <version.jreleaser.plugin>1.5.1</version.jreleaser.plugin>
         <version.license.plugin>4.1</version.license.plugin>
-        <version.resources.plugin>3.3.0</version.resources.plugin>
+        <version.resources.plugin>3.3.1</version.resources.plugin>
         <version.site.plugin>3.12.1</version.site.plugin>
         <version.source.plugin>3.2.1</version.source.plugin>
-        <version.surefire.plugin>3.0.0-M7</version.surefire.plugin>
-        <version.versions.plugin>2.13.0</version.versions.plugin>
+        <version.surefire.plugin>3.0.0</version.surefire.plugin>
+        <version.versions.plugin>2.15.0</version.versions.plugin>
     </properties>
 
     <name>kordamp-parent</name>
